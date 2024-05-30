@@ -1,15 +1,5 @@
-import { ErrorHandler } from "../types";
-
-class CustomError extends Error {
-  statusCode: number;
-
-  constructor(statusCode: number, message: string) {
-    super(message);
-    this.statusCode = statusCode;
-    Object.setPrototypeOf(this, CustomError.prototype);
-  }
-}
-
-export const errorHandler = (statusCode: number, message: string) => {
-  return new CustomError(statusCode, message);
+export const errorHanlder = (message: string) => {
+  const error = new Error();
+  error.message = message;
+  return error;
 };

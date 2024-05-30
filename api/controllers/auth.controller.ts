@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import brcryptjs from "bcryptjs";
 import User from "../models/user.model";
-import { errorHandler } from "../utils/error";
 
 export const signup = async (
   req: Request,
