@@ -1,8 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { Request, Response, NextFunction } from "express";
 import userRouter from "./routes/user.route";
 import authRouter from "./routes/auth.route";
+import { ErrorProps } from "./types";
 
 dotenv.config();
 
@@ -22,6 +24,20 @@ app.use("/api/auth", authRouter);
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
+});
+
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+  if (err) {
+    const error: ErrorProps = err as ErrorProps;
+    const statusCode = error.errorResponse.statusCode || 500;
+    const message = error.errorResponse.errmsg || "Internal Server Error";
+
+    return res.status(statusCode).json({
+      success: false,
+      statusCode,
+      message,
+    });
+  }
 });
 
 export default app;
