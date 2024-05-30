@@ -8,7 +8,8 @@ export const signup = async (
   next: NextFunction
 ) => {
   const { username, email, password } = req.body;
-  const hashedPassword = brcryptjs.hashSync(password, 10);
+  const salt = await brcryptjs.genSalt(10);
+  const hashedPassword = brcryptjs.hashSync(password, salt);
 
   const newUser = new User({ username, email, password: hashedPassword });
 
