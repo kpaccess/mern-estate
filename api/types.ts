@@ -1,9 +1,6 @@
 export type ErrorProps = {
-  errorResponse: {
-    errmsg: string;
-    errorMessage: string;
-    statusCode: number;
-  };
+  message: string;
+  statusCode: number;
 };
 
 export type ErrorHandler = {
