@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
+import cookierParser from "cookie-parser";
 import userRouter from "./routes/user.route";
 import authRouter from "./routes/auth.route";
 import { ErrorProps } from "./types";
@@ -18,6 +19,7 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use(cookierParser());
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
