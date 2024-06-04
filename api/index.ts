@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from "express";
 import cookierParser from "cookie-parser";
 import userRouter from "./routes/user.route";
 import authRouter from "./routes/auth.route";
+import listingRouter from "./routes/listing.route";
 import { ErrorProps } from "./types";
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cookierParser());
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
