@@ -106,3 +106,17 @@ export const google = async (
     next(err);
   }
 };
+
+export const signout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json("User signed out successfully");
+  } catch (err) {
+    console.error("Error during signout:", err); // Log the error for debugging
+    next(err);
+  }
+};
