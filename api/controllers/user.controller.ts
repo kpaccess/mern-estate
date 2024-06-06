@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import { errorHandler } from "../utils/error";
 import User from "../models/user.model";
+import Listing from "../models/listing.model";
 
 interface AuthenticateRequest extends Request {
   user?: {
@@ -62,6 +63,24 @@ export const deleteUser = async (
     await User.findByIdAndDelete(req.params.id);
     res.clearCookie("access_token");
     res.status(200).json({ message: "user has been deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserListings = async (
+  req: AuthenticateRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req?.user?.id !== req.params.id) {
+    return next(errorHandler(401, "You can only view your own listings"));
+  }
+
+  try {
+    const listings = await Listing.find({ userRef: req.params.id });
+    console.log(" listings: ", listings);
+    res.status(200).json(listings);
   } catch (error) {
     next(error);
   }
