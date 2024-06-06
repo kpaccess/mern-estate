@@ -8,3 +8,9 @@ export type ErrorHandler = {
   message: string;
   name: string;
 };
+
+export interface AuthenticateRequest extends Request {
+  user?: {
+    id?: string;
+  };
+}

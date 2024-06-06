@@ -24,7 +24,7 @@ export const updateUser = async (
   }
 
   try {
-    if (req.body.password) {
+    if (req?.body?.password) {
       const salt = await bcryptjs.genSalt(10);
       req.body.password = bcryptjs.hashSync(req.body.password, salt);
     }

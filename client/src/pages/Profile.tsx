@@ -154,6 +154,24 @@ export default function Profile() {
     }
   };
 
+  const handleListingDelete = async (listingId: string) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserListings((prev) => prev.filter((item) => item._id !== listingId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -269,7 +287,7 @@ export default function Profile() {
               <Link to={`/listing/${listing._id}`}>
                 <img
                   className="h-16 w-16 object-contain"
-                  src={listing?.imageUrls}
+                  src={listing?.imageUrls[0]}
                   alt={listing?.name}
                 />
               </Link>
@@ -280,7 +298,12 @@ export default function Profile() {
                 <p>{listing?.name}</p>
               </Link>
               <div className="flex flex-col items-center">
-                <button className="text-red-700 uppercase">Delete</button>
+                <button
+                  className="text-red-700 uppercase"
+                  onClick={() => handleListingDelete(listing._id)}
+                >
+                  Delete
+                </button>
                 <button className="text-green-700 uppercase">Edit</button>
               </div>
             </div>
