@@ -21,6 +21,7 @@ import {
   signOutUserFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { ListingProps } from "../types";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector(
@@ -32,7 +33,7 @@ export default function Profile() {
   const [formData, setFormData] = useState<{ avatar?: string }>({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
+  const [userListings, setUserListings] = useState<ListingProps[]>([]);
 
   const profileRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
